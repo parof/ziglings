@@ -35,6 +35,14 @@ const InsectStat = enum { flowers_visited, still_alive };
 const Insect = union(InsectStat) {
     flowers_visited: u16,
     still_alive: bool,
+
+    // I added this since it can be useful in future!
+    pub fn printInsect(self: *Insect) void {
+        switch (self.*) {
+            .still_alive => |a| std.debug.print("Ant alive is: {}. ", .{a}),
+            .flowers_visited => |f| std.debug.print("Bee visited {} flowers. ", .{f}),
+        }
+    }
 };
 
 pub fn main() void {
@@ -44,14 +52,14 @@ pub fn main() void {
     std.debug.print("Insect report! ", .{});
 
     // Could it really be as simple as just passing the union?
-    printInsect(???);
-    printInsect(???);
+    ant.printInsect();
+    printInsect(bee);
 
     std.debug.print("\n", .{});
 }
 
 fn printInsect(insect: Insect) void {
-    switch (???) {
+    switch (insect) {
         .still_alive => |a| std.debug.print("Ant alive is: {}. ", .{a}),
         .flowers_visited => |f| std.debug.print("Bee visited {} flowers. ", .{f}),
     }
